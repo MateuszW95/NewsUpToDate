@@ -102,6 +102,9 @@ dependencies {
     //Standardized response interface from the network response
     implementation "com.github.skydoves:sandwich:1.2.1"
 
+    //compose insets utils lib
+    implementation 'dev.chrisbanes.accompanist:accompanist-insets:0.6.2'
+
     //Tests
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

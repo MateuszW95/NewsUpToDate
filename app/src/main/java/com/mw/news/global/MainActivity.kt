@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.core.view.WindowCompat
 import com.mw.news.R
 import com.mw.news.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,5 +29,8 @@ class MainActivity : AppCompatActivity() {
                 Navigation()
             }
         }
+        
+        //window insets
+        WindowCompat.setDecorFitsSystemWindows(window, false)
     }
 }
