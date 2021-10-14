@@ -1,0 +1,10 @@
+spotless {
+    kotlin {
+        target '**/*.kt'
+        targetExclude("$buildDir/**/*.kt")
+        targetExclude('bin/**/*.kt')
+
+        ktlint()
+        licenseHeaderFile rootProject.file('spotless/copyright.kt')
+    }
+}
