@@ -1,14 +1,15 @@
-package com.mw.news.models.articles
+package com.mw.news.network.dto.articles
 
 
+import android.os.Parcelable
+import com.mw.news.models.ArticleModel
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.parcelize.Parcelize
-import android.os.Parcelable
 
 @Serializable
 @Parcelize
-data class Article(
+data class ArticleDto(
     @SerialName("author")
     val author: String? = null,
     @SerialName("content")
@@ -18,11 +19,16 @@ data class Article(
     @SerialName("publishedAt")
     val publishedAt: String? = null,
     @SerialName("source")
-    val source: Source? = null,
+    val source: SourceDto? = null,
     @SerialName("title")
     val title: String? = null,
     @SerialName("url")
     val url: String? = null,
     @SerialName("urlToImage")
     val urlToImage: String? = null
-) : Parcelable
+) : Parcelable {
+
+    fun toArticleModel(): ArticleModel =
+        ArticleModel(title = title, dateString = publishedAt, author = author, image = urlToImage)
+
+}

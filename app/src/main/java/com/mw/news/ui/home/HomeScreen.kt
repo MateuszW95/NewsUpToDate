@@ -6,21 +6,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.mw.news.base.State
-import com.mw.news.models.articles.Article
+import com.mw.news.models.ArticleModel
 import com.mw.news.widgets.ProgressView
 
 @Composable
 fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
-    val viewState by remember(viewModel) { viewModel.topHeadlinesFlow }.collectAsState()
-
-    ProgressView(showProgress = viewState is State.Loading, modifier = Modifier.fillMaxSize()) {
+    val progressState by remember(viewModel) { viewModel.viewStateFlow }.collectAsState()
+    LaunchedEffect(Unit) { //is executed only on the first recomposition because the key parameter is constant (Unit)
+        viewModel.getInitialData()
+    }
+    ProgressView(showProgress = progressState is State.Loading, modifier = Modifier.fillMaxSize()) {
         ArticleList(viewModel)
     }
 }
@@ -28,8 +27,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
 
 @Composable
 fun ArticleList(viewModel: HomeViewModel) {
-    val viewState by remember(viewModel) { viewModel.topHeadlinesFlow }.collectAsState()
-    val data = (viewState as? State.Success)?.data?.articles ?: emptyList()
+    val data by remember(viewModel) { viewModel.articlesFlow }.collectAsState()
     LazyColumn {
         items(
             items = data,
@@ -40,7 +38,7 @@ fun ArticleList(viewModel: HomeViewModel) {
 }
 
 @Composable
-fun ArticleListItem(article: Article) {
+fun ArticleListItem(article: ArticleModel) {
     Row {
         Column {
             Text(text = "${article.title}")

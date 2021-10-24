@@ -2,15 +2,15 @@ package com.mw.news.ui.home
 
 import com.mw.news.base.BaseUseCaseWithParams
 import com.mw.news.base.State
-import com.mw.news.models.articles.ArticlesResponse
+import com.mw.news.network.dto.articles.ArticlesResponseDto
 import com.mw.news.repo.ArticlesRemoteRepo
 import com.skydoves.sandwich.ApiResponse
 import javax.inject.Inject
 
 class GetTopHeadlinesUseCase @Inject constructor(val repo: ArticlesRemoteRepo) :
-    BaseUseCaseWithParams<GetTopHeadlinesUseCase.Params, State<ArticlesResponse>> {
+    BaseUseCaseWithParams<GetTopHeadlinesUseCase.Params, State<ArticlesResponseDto>> {
 
-    override suspend fun run(params: Params): State<ArticlesResponse> {
+    override suspend fun run(params: Params): State<ArticlesResponseDto> {
         return repo.getTopHeadlines(page = params.page, pageSize = params.pageSize)
             .let { response ->
                 when (response) {
@@ -22,7 +22,7 @@ class GetTopHeadlinesUseCase @Inject constructor(val repo: ArticlesRemoteRepo) :
     }
 
     data class Params(
-        val page: Int,
+        var page: Int,
         val pageSize: Int
     )
 }

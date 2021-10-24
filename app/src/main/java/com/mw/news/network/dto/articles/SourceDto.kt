@@ -1,4 +1,4 @@
-package com.mw.news.models.articles
+package com.mw.news.network.dto.articles
 
 
 import android.os.Parcelable
@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @Parcelize
-data class Source(
+data class SourceDto(
     @SerialName("id")
     val id: String? = null,
     @SerialName("name")
